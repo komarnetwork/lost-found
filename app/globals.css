@@ -1,0 +1,132 @@
+@import "tailwindcss";
+
+:root {
+  --paper: #fbe6c2;
+  --ticket: #fff8cf;
+  --ink: #2a7c13;
+  --ink-soft: #3a6b22;
+  --booth: #2a7c13;
+  --booth-edge: #1d5a0d;
+  --claim-lost: #1d5a0d;
+  --claim-found: #3d6b1a;
+  --leaf: #76c457;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-ticket: var(--ticket);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-booth: var(--booth);
+  --color-booth-edge: var(--booth-edge);
+  --color-claim-lost: var(--claim-lost);
+  --color-claim-found: var(--claim-found);
+  --color-leaf: var(--leaf);
+  --font-sans: var(--font-work-sans);
+  --font-display: var(--font-roboto-slab);
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-work-sans), sans-serif;
+}
+
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.counter-texture {
+  background-image: radial-gradient(rgba(42, 124, 19, 0.08) 1px, transparent 1px);
+  background-size: 15px 15px;
+}
+
+/* Ticket card: the main claim slip for a report */
+.ticket {
+  background: var(--ticket);
+  border: 1px solid rgba(42, 124, 19, 0.2);
+  box-shadow: 0 3px 0 rgba(42, 124, 19, 0.1);
+}
+
+/* Perforated tear line between the ticket body and its action stub */
+.ticket-stub {
+  position: relative;
+  border-top: 2px dashed rgba(42, 124, 19, 0.32);
+}
+
+.ticket-stub::before,
+.ticket-stub::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 16px;
+  height: 16px;
+  background: var(--paper);
+  border-radius: 9999px;
+  transform: translateY(-50%);
+}
+
+.ticket-stub::before {
+  left: -9px;
+}
+
+.ticket-stub::after {
+  right: -9px;
+}
+
+/* Ink stamp: double-ring circular mark for status */
+.stamp {
+  position: relative;
+  display: inline-flex;
+  height: 3.75rem;
+  width: 3.75rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  border: 2px solid currentColor;
+  text-align: center;
+  line-height: 1;
+}
+
+.stamp::after {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border: 1px solid currentColor;
+  border-radius: 9999px;
+}
+
+/* Nav tab hanging from the booth counter, torn free at the top */
+.tab-ticket {
+  position: relative;
+}
+
+.tab-ticket::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  height: 12px;
+  width: 12px;
+  transform: translateX(-50%);
+  border-radius: 9999px;
+  background: var(--booth);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .stamp {
+    animation: stamp-land 0.35s ease-out;
+  }
+}
+
+@keyframes stamp-land {
+  from {
+    opacity: 0;
+    transform: scale(1.4) rotate(var(--stamp-rotate, -10deg));
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(var(--stamp-rotate, -10deg));
+  }
+}
